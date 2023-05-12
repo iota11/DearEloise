@@ -12,11 +12,11 @@ public class Light_Sphere : Light
         SphereCollider SC = GetComponent<SphereCollider>();
         while (Activate)
         {
-            SphereCollider.enabled = true;
-            light.SetActive(true);
+            SC.enabled = true;
+            light.enabled = true;
             yield return new WaitForSeconds(5f);
-            SphereCollider.enabled = false;
-            light.SetActive(false);
+            SC.enabled = false;
+            light.enabled = true;
             yield return new WaitForSeconds(2f);
         }
 
