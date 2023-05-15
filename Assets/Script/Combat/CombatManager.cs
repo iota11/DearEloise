@@ -24,7 +24,8 @@ public class CombatManager : MonoBehaviour
             float z = Random.Range(-1f, 1f);
             Vector2 Dir = new Vector2(x, z);
             Dir.Normalize();
-            Instantiate(Enemy, new Vector3(LightHouse.transform.position.x + Dir.x * SpawnDis, 0.5f, LightHouse.transform.position.z + Dir.y * SpawnDis), Quaternion.identity);
+            var Temp = Instantiate(Enemy, new Vector3(LightHouse.transform.position.x + Dir.x * SpawnDis, 0.5f, LightHouse.transform.position.z + Dir.y * SpawnDis), Quaternion.identity);
+            Temp.GetComponent<Enemy_Combat>().SetTarget(LightHouse);
             float SpawnTime = Random.Range(MinSpawnTime, MaxSpawnTime);
             yield return new WaitForSeconds(SpawnTime);
         }

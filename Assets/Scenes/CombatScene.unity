@@ -136,13 +136,14 @@ GameObject:
   - component: {fileID: 220648598}
   - component: {fileID: 220648595}
   - component: {fileID: 220648594}
+  - component: {fileID: 220648599}
   m_Layer: 0
   m_Name: Lamp_Search
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &220648594
 Light:
   m_ObjectHideFlags: 0
@@ -262,14 +263,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220648593}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0.3971479, y: 0, z: 0, w: 0.91775465}
   m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 46.8, y: 0, z: 0}
 --- !u!114 &220648598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,10 +283,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77bc3bce4b7aec84798840f844434fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Attack: 0
+  Attack: 10
   MaxEnergy: 0
   EnergyConsume: 0
-  Health: 0
+  Health: 100
+--- !u!114 &220648599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220648593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544e52e7528d39543a55e8259cace9bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_angle: 22.5
+  m_distance: 40
+  m_isTrigger: 1
+  m_isFixScale: 1
 --- !u!1 &298647105
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,11 +501,11 @@ GameObject:
   - component: {fileID: 560936912}
   m_Layer: 0
   m_Name: Lamp_Sphere
-  m_TagString: Untagged
+  m_TagString: LampSphere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &560936907
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -641,10 +658,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84c3a5bc5b8ab454585d623278d767a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Attack: 0
+  Attack: 10
   MaxEnergy: 0
   EnergyConsume: 0
-  Health: 0
+  Health: 100
+--- !u!1 &768764835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 768764837}
+  - component: {fileID: 768764836}
+  m_Layer: 0
+  m_Name: CombatManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &768764836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768764835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136bab960bc2d2a41b9e1436287bd102, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LightHouse: {fileID: 298647105}
+  Enemy: {fileID: 8401348835629597642, guid: 278e3ba4784ecd44c8930973da0132b5, type: 3}
+  MaxSpawn: 30
+  MinSpawn: 20
+  MaxSpawnTime: 2
+  MinSpawnTime: 5
+--- !u!4 &768764837
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768764835}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.993608, y: 22.061716, z: 0.13655291}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1191559476
 GameObject:
   m_ObjectHideFlags: 0
