@@ -13,7 +13,6 @@ public class LightPa : MonoBehaviour
 
     void Start(){
         light = GetComponent<Light>();
-        Debug.Log(light);
         StartFunction();
     }
 
