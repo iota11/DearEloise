@@ -2,25 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Light_Sphere : LightPa
+public class Light_Flash : LightPa
 {
-
     
 
 
     override protected IEnumerator Function(){
-        
-        SphereCollider SC = GetComponent<SphereCollider>();
+        ConeCollider SC = GetComponent<ConeCollider>();
         while (Activate)
         {
-            
+
             SC.enabled = true;
             light.enabled = true;
-            yield return new WaitForSeconds(5f);
-            
+            yield return new WaitForSeconds(2f);
+
             SC.enabled = false;
             light.enabled = false;
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.1f);
         }
 
 
