@@ -1,0 +1,34 @@
+{
+    "name": "InputTest",
+    "maps": [
+        {
+            "name": "Test",
+            "id": "ccc386ac-7c01-4c54-afe4-89a08cc5d01d",
+            "actions": [
+                {
+                    "name": "Look",
+                    "type": "PassThrough",
+                    "id": "fc8797aa-bc3c-4d42-89d0-7960ad770883",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1f27a327-7e42-4e21-a9fe-3eec1603ca2d",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
