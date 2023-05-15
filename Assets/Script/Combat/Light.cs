@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Light : MonoBehaviour
+public class LightPa : MonoBehaviour
 {
     public int Attack;
     [SerializeField]
@@ -13,9 +13,13 @@ public class Light : MonoBehaviour
 
     void Start(){
         light = GetComponent<Light>();
+        Debug.Log(light);
+        StartFunction();
     }
 
     protected void StartFunction(){
+        
+        Activate = true;
         StartCoroutine(Function());
 
 

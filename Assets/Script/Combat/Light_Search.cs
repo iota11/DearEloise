@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Light_Search : Light
+public class Light_Search : LightPa
 {
 
     
