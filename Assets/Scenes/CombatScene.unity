@@ -481,6 +481,7 @@ GameObject:
   - component: {fileID: 560936909}
   - component: {fileID: 560936908}
   - component: {fileID: 560936907}
+  - component: {fileID: 560936912}
   m_Layer: 0
   m_Name: Lamp_Sphere
   m_TagString: Untagged
@@ -628,6 +629,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+--- !u!114 &560936912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560936906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84c3a5bc5b8ab454585d623278d767a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Attack: 0
+  MaxEnergy: 0
+  EnergyConsume: 0
+  Health: 0
 --- !u!1 &1191559476
 GameObject:
   m_ObjectHideFlags: 0
