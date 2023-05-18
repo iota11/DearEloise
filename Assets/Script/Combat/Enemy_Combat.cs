@@ -6,9 +6,15 @@ public class Enemy_Combat : Enemy
 {
 
     protected override void Move() {
-        StartCoroutine(MoveCor());
+        //StartCoroutine(MoveCor());
     
     
+    }
+
+    public override void Found()
+    {
+        //set data
+
     }
 
     IEnumerator MoveCor() {

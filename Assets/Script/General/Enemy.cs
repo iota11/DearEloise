@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
@@ -22,22 +23,14 @@ public class Enemy : MonoBehaviour
 
     protected void OnTriggerStay(Collider other)
     {
-        Debug.Log("in");
+
         if (other.CompareTag("Lamp")) {
-            Debug.Log(SphereCounter);
+
             if (SphereCounter >= 1) {
                 SphereCounter = 0;
-                if (other.GetComponent<Light_Sphere>())
-                {
-                    LoseHealth(other.GetComponent<Light_Sphere>().Attack);
-                }else if (other.GetComponent<Light_Search>())
-                {
-                    LoseHealth(other.GetComponent<Light_Search>().Attack);
-                }
-                else if (other.GetComponent<Light_Flash>())
-                {
-                    LoseHealth(other.GetComponent<Light_Flash>().Attack);
-                }
+
+                LoseHealth(other.GetComponent<LightPa>().Attack);
+
             }
             SphereCounter += Time.deltaTime;
 
@@ -55,6 +48,20 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public virtual void Found() { 
+    
+    
+    }
+
+    protected void Attack() { 
+    
+    }
+
+    protected void Impact() { 
+    
+    
+    }
+
     void LoseHealth(float damage) {
         Health -= damage;
         if (Health <= 0) {
@@ -63,7 +70,7 @@ public class Enemy : MonoBehaviour
     
     }
 
-    void Death() {
+    protected void Death() {
         Destroy(gameObject);
     
     }
@@ -74,10 +81,10 @@ public class Enemy : MonoBehaviour
     
     }
 
-    public void SetTarget(GameObject Target_in)
+    public void SetData(GameObject Target_in)
     {
         Target = Target_in;
-
-
+        GetComponent<AIDestinationSetter>().target = Target_in.transform;
+        GetComponent<AIPath>().maxSpeed = Speed;
     }
 }
