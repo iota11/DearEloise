@@ -16,6 +16,7 @@ public class LightInteractable : IInteractable {
         animator = GetComponent<Animator>();
         UIContainer.SetActive(false);
         light.intensity = 0;
+        _isTriggered = false;
     }
 
     public override void CheckTriggered() {
@@ -23,7 +24,6 @@ public class LightInteractable : IInteractable {
             if (playerTrans.gameObject.GetComponent<PlayerInteract>().GetInteractable() != this) {
                 interactButton.onClick.RemoveAllListeners();
                 UIContainer.SetActive(false);
-                
                 _isTriggered = false;
             }
         }
