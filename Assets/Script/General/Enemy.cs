@@ -8,45 +8,59 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected float Health, Speed;
     protected GameObject Target;
-    private float SphereCounter;
+    private Dictionary<int, Coroutine> LightCors;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        LightCors = new Dictionary<int, Coroutine>();
         Move();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    protected void OnTriggerStay(Collider other)
-    {
-
-        if (other.CompareTag("Lamp")) {
-
-            if (SphereCounter >= 1) {
-                SphereCounter = 0;
-
-                LoseHealth(other.GetComponent<LightPa>().Attack);
-
-            }
-            SphereCounter += Time.deltaTime;
 
 
 
+    protected void OnTriggerEnter(Collider other) {
+        //damage triggertime and damage cooldown time
+        if (other.CompareTag("Lamp"))
+        {
+            Coroutine LC = StartCoroutine(LightCor(other.GetComponent<LightPa>().CoolDownTime, other.GetComponent<LightPa>().TriggerTime, other.GetComponent<LightPa>().Attack));
+            
+            LightCors.Add(other.gameObject.GetInstanceID(), LC);
         }
+
     }
 
     protected void OnTriggerExit(Collider other)
     {
+        //damage triggertime and damage cooldown time
         if (other.CompareTag("Lamp"))
         {
-            SphereCounter = 0;
+            StopCoroutine(LightCors[other.GetInstanceID()]);
+            LightCors.Remove(other.gameObject.GetInstanceID());
         }
 
     }
+
+    //damage triggertime and damage cooldown time
+    protected IEnumerator LightCor(float CoolDownTime, float TriggerTime, float attack) {
+        float counter = 0;
+        while (true) {
+            if (counter >= TriggerTime) {
+                LoseHealth(attack);
+            }
+            if (counter >= CoolDownTime + TriggerTime)
+            {
+                counter = 0;
+            }
+            counter += Time.deltaTime;
+
+            yield return null;
+        }
+
+        yield return null;
+    }
+
+
 
     public virtual void Found() { 
     
