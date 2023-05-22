@@ -14,7 +14,7 @@ public class Light_Search : LightPa
         var start = gameObject.transform.rotation;
         var end = Quaternion.Euler(gameObject.transform.eulerAngles + new Vector3(0, RotateRange, 0));
         float t = 0;
-        while (Activate) {
+        while (CurrentState == LightState.Activate) {
             gameObject.transform.rotation = Quaternion.Slerp(start, end, t);
             t += Time.deltaTime * RotateSpeed;
             if (t >= 1) {
