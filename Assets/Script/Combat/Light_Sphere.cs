@@ -11,7 +11,7 @@ public class Light_Sphere : LightPa
     override protected IEnumerator Function(){
         
         SphereCollider SC = GetComponent<SphereCollider>();
-        while (Activate)
+        while (CurrentState == LightState.Activate)
         {
             
             SC.enabled = true;

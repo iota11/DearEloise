@@ -9,7 +9,7 @@ public class Light_Flash : LightPa
 
     override protected IEnumerator Function(){
         ConeCollider SC = GetComponent<ConeCollider>();
-        while (Activate)
+        while (CurrentState == LightState.Activate)
         {
 
             SC.enabled = true;
