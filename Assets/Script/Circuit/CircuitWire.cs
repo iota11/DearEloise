@@ -6,34 +6,63 @@ using UnityEngine;
 
 public class CircuitWire : MonoBehaviour
 {
-    [SerializeField] List<CircuitEnd> endsList = new List<CircuitEnd>();
-
-    List<CircuitEnd> inputEnds = new List<CircuitEnd>();
+    [SerializeField] public List<CircuitEnd> endsList = new List<CircuitEnd>();
+    [SerializeField] public bool _isOn = false;
+    [HideInInspector]
+    public List<CircuitEnd> inputEndsList = new List<CircuitEnd>();
     public event Action OnWireTriggered;
     public event Action OnWireQuenched;
-    private void OnEnable() {
-        foreach(CircuitEnd end in endsList) {
-            end.SetInWire(this);
-            end.OnEndTriggered += SetOn;
-            end.OnEndQuenched += SetOff;
+
+    virtual public void SetUp() {
+        foreach (CircuitEnd end in endsList) {
+            end.SetInWire(this); //make wire listen to the wire
+            if (end._isInput) {
+                end.OnEndTriggered += SetOn;   //listen to input trigger
+                end.OnEndQuenched += SetOff;
+                inputEndsList.Add(end);
+            }
         }
         Debug.Log("set");
     }
+    private void OnEnable() {
+        SetUp();
+    }
 
+    public void Refresh() {
+        if (_isOn) {
+            Debug.Log("adfaafafafaf");
+            OnWireTriggered?.Invoke();
+            _isOn = true;
+        }
+    }
+    //when a input end trigger the whole wire, set the whole net on
     public void SetOn(CircuitEnd newInputEnd) {
         Debug.Log("find an input end triggered");
-        inputEnds.Add(newInputEnd);
         OnWireTriggered?.Invoke();
+        _isOn = true;
     }
+
+    //when an input end quench, check if there is other end triggered. if not set the whole net off
     public void SetOff(CircuitEnd quenchedInputEnd) {
         Debug.Log("find a quenched end triggered");
-        inputEnds.Remove(quenchedInputEnd);
-        if (inputEnds.Count == 0) {
+        bool _existOn = false;
+        foreach (CircuitEnd ce in inputEndsList) {
+            if (ce._isTriggered) {
+                _existOn = true;
+            }
+        }
+        if (!_existOn) {
             OnWireQuenched?.Invoke();
+            _isOn = false;
         }
     }
 
     private void OnDrawGizmos() {
-        
+        Gizmos.color = _isOn? Color.yellow: Color.black; 
+        foreach (CircuitEnd end in endsList) {
+            Vector3 pos = end.gameObject.transform.position;
+            Gizmos.DrawLine(transform.position, pos);
+        }
+
     }
 }
