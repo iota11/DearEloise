@@ -11,11 +11,7 @@ public class Enemy_Combat : Enemy
     
     }
 
-    public override void Found()
-    {
-        //set data
 
-    }
 
     IEnumerator MoveCor() {
         
