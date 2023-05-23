@@ -23,8 +23,11 @@ public class NPCInteractable : IInteractable {
     public override void CheckTriggered() {
         if (playerTrans) {
             if (playerTrans.gameObject.GetComponent<PlayerInteract>().GetInteractable() != this) {
+                interactButton.onClick.RemoveAllListeners();
                 UIContainer.SetActive(false);
                 _isTriggered = false;
+                playerTrans = null;
+
             }
         }
     }

@@ -18,9 +18,14 @@ public class DoorInteractable : IInteractable {
 
     public override void CheckTriggered() {
         if (playerTrans) {
+            //check if player leave the interation then close door and set trigger, UI and open back to false
             if (playerTrans.gameObject.GetComponent<PlayerInteract>().GetInteractable() != this) {
+                interactButton?.onClick.RemoveAllListeners();
+                UIContainer?.SetActive(false);
                 animator.SetBool("Open", false);
                 _isOpen = false;
+                _isTriggered = false;
+                playerTrans = null;
             }
         }
     }

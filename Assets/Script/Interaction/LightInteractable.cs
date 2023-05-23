@@ -25,6 +25,8 @@ public class LightInteractable : IInteractable {
                 interactButton.onClick.RemoveAllListeners();
                 UIContainer.SetActive(false);
                 _isTriggered = false;
+                playerTrans = null;
+
             }
         }
     }
