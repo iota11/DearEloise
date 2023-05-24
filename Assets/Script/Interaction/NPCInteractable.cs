@@ -10,39 +10,28 @@ public class NPCInteractable : IInteractable {
 
     private Button interactButton;
     private Animator animator;
-    private bool _isTriggered;
+    //private bool _isTriggered;
     //private NPCHeadLookAt npcHeadLookAt;
 
     private void Awake() {
         animator = GetComponent<Animator>();
-        UIContainer.SetActive(false);
+        //UIContainer.SetActive(false);
         _isTriggered = false;
         //npcHeadLookAt = GetComponent<NPCHeadLookAt>();
     }
 
-    public override void CheckTriggered() {
-        if (playerTrans) {
-            if (playerTrans.gameObject.GetComponent<PlayerInteract>().GetInteractable() != this) {
+    public override void Deactivate() {
+       
                 interactButton.onClick.RemoveAllListeners();
                 UIContainer.SetActive(false);
                 _isTriggered = false;
                 playerTrans = null;
 
-            }
-        }
     }
-    public override void Interact(Transform interactorTransform) {
-        //ChatBubble3D.Create(transform.transform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Happy, "Hello there!");
-
-        //animator.SetTrigger("Talk");
-        //Debug.Log(interactText);
-        //float playerHeight = 1.7f;
-        //npcHeadLookAt.LookAtPosition(interactorTransform.position + Vector3.up * playerHeight);
-        _isTriggered = true;
+    public override void InteractCustom(Transform interactorTransform) {
         UIContainer.gameObject.SetActive(true);
         interactButton = UIContainer.transform.Find("Button").gameObject.GetComponent<Button>();
         interactButton.onClick.AddListener(Talk);
-        playerTrans = interactorTransform;
     }
 
     public void Talk() {

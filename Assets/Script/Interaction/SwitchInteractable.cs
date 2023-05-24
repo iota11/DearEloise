@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LightInteractable : IInteractable {
+public class SwitchInteractable : IInteractable {
 
     [SerializeField] private GameObject UIContainer;
-    [SerializeField] private Light light;
-    private bool _isOn = false;
+    [SerializeField] private CircuitSwitch _switch;
+    private int _switchOption = 0;
+    private int _optionNum = 1;
     private Button interactButton;
     private Animator animator;
     //private NPCHeadLookAt npcHeadLookAt;
 
     private void Awake() {
         animator = GetComponent<Animator>();
-        //UIContainer.SetActive(false);
-        light.intensity = 0;
         _isTriggered = false;
+        _optionNum = _switch.GetOpetionsNum();
     }
 
     public override void Deactivate() {
@@ -26,12 +26,10 @@ public class LightInteractable : IInteractable {
                 playerTrans = null;
     }
     public override void InteractCustom(Transform interactorTransform) {
+        //activate UI and button
             UIContainer.gameObject.SetActive(true);
             interactButton = UIContainer.transform.Find("Button").gameObject.GetComponent<Button>();
-            interactButton.onClick.AddListener(TriggerLight);
-            if (_isOn) {
-                light.intensity = 5;
-            }
+            interactButton.onClick.AddListener(TriggerSwitch);
     }
     public void DisableUI() {
         interactButton?.onClick?.RemoveAllListeners();
@@ -40,24 +38,16 @@ public class LightInteractable : IInteractable {
 
     public override void SetElectricOn(CircuitEnd end) {
         _isElectricOn = true;
-        if (_isOn) {
-            light.intensity = 5;
-        }
     }
 
     public override void SetElectricOff(CircuitEnd end) {
         _isElectricOn = false;
-        light.intensity = 0;
-        //switch is still on
     }
-    public void TriggerLight() {
-        if (_isElectricOn) {
-            _isOn = !_isOn;
-            if (_isOn) {
-                light.intensity = 5;
-            } else {
-                light.intensity = 0;
-            }
+    public void TriggerSwitch() {
+        if ((_isElectric&& _isElectricOn) || !_isElectric) {
+            _switchOption++;
+            _switchOption %= _optionNum;
+            _switch.SwitchNo = _switchOption;//apply switch
         }
     }
 

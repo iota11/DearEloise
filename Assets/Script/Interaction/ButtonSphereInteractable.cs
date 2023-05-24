@@ -32,11 +32,11 @@ public class ButtonSphereInteractable : IInteractable {
         ToggleColor();
     }
 
-    public override void Interact(Transform interactorTransform) {
+    public override void InteractCustom(Transform interactorTransform) {
         PushButton();
     }
 
-    public override void CheckTriggered() {
+    public override void Deactivate() {
 
     }
 

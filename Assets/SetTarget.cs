@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class SetTarget : MonoBehaviour
 {
+    private bool onUI = false;
     public Vector3 posScreen;
     public Camera cam;
     private bool _isSet;
@@ -22,9 +23,8 @@ public class SetTarget : MonoBehaviour
     public void OnSetTarget(InputAction.CallbackContext context) {
         _isSet = context.started || context.performed;
 
-       
         if (_isSet) {
-            if (!EventSystem.current.IsPointerOverGameObject()) {//if the click is not UI element
+            if (!onUI) {//if the click is not UI element
                 RaycastHit hit;
                 if (Physics.Raycast(cam.ScreenPointToRay(posScreen), out hit, Mathf.Infinity, mask)) {
                     Debug.Log("hit");
@@ -41,5 +41,13 @@ public class SetTarget : MonoBehaviour
         //Debug.Log(pos);
         posScreen = new Vector3(pos.x, pos.y, 0);
        
+    }
+
+    public void Update() {
+        if (EventSystem.current.IsPointerOverGameObject()) {
+            onUI = true;
+        } else {
+            onUI = false;
+        }
     }
 }

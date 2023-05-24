@@ -6,12 +6,28 @@ using UnityEngine.UI;
 public class PlayerInteract : MonoBehaviour {
     private IInteractable interactable;
 
+
+    private IInteractable Interactable {
+        get { return interactable; }
+        set {
+            //Debug.Log("checking");
+            if (value != interactable) {
+                interactable?.Deactivate();
+                interactable = value;
+                if (interactable) {
+                    Debug.Log("interact with " + interactable?.name);
+                    interactable.Interact(transform);
+                }
+            }
+        }
+     }
     private void Update() {
 
-            interactable = GetInteractableObject();
+         Interactable = GetInteractableObject();
+        /*
             if (interactable != null) {
                 interactable.Interact(transform);
-            }
+            }*/
     }
 
     public IInteractable GetInteractable() {

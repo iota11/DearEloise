@@ -30,17 +30,21 @@ public class CircuitSwitch : CircuitWire
                 end.OnEndQuenched += SetOff;
                 inputEndsList.Add(end);
             } else {
-                _options.Add(end);
+               // _options.Add(end);
             }
         }
         SetValidEnd();
         OnSwitchChange += SetValidEnd;
     }
 
+    public int GetOpetionsNum() {
+        return _options.Count;
+    }
     private void SetValidEnd() {
         for (int i = 0; i < _options.Count; i++) {
             CircuitEnd end = _options[i];
             if(i == SwitchNo) {
+                Debug.Log("set true " + end.name);
                 end._IsTriggerable = true;
             } else {
                 end._IsTriggerable = false;
@@ -49,9 +53,9 @@ public class CircuitSwitch : CircuitWire
         }
         Refresh();
     }
-
+    /*
     private void Update() {
        SwitchNo = test;
     }
-
+    */
 }
