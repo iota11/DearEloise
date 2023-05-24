@@ -6,7 +6,7 @@ using Pathfinding;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    protected float Health, Speed;
+    protected float Health, Speed, AttackRange, AttackTime, Attack;
     protected Transform Target;
     private Dictionary<int, Coroutine> LightCors;
     [SerializeField]
@@ -102,7 +102,7 @@ public class Enemy : MonoBehaviour
                 break;
             case EnemyState.Attacking:
                 GetComponent<AIPath>().canMove = false;
-                CurrentCor = StartCoroutine(Attack());
+                CurrentCor = StartCoroutine(Attacking());
                 
                 break;
 
@@ -117,12 +117,33 @@ public class Enemy : MonoBehaviour
 
     protected IEnumerator Approaching()
     {
-
+        while (CurrentState == EnemyState.Guard) {
+            if ((new Vector2(Target.position.x - transform.position.x, Target.position.z - transform.position.z)).magnitude <= AttackRange) {
+                ChangeState(EnemyState.Attacking);
+            }
+            yield return null;
+        }
         yield return null;
     }
 
-    protected IEnumerator Attack() {
+    protected IEnumerator Attacking() {
+        float t = 0;
+        while (CurrentState == EnemyState.Guard)
+        {
+            if (t >= AttackTime) {
+                Target.gameObject.GetComponent<LightPa>().Attacked(Attack);
+                t = 0;
+            }
 
+
+            if ((new Vector2(Target.position.x - transform.position.x, Target.position.z - transform.position.z)).magnitude > (AttackRange +0.1f))
+            {
+                ChangeState(EnemyState.Guard);
+            }
+
+            t += Time.deltaTime;
+            yield return null;
+        }
         yield return null;
     }
 
