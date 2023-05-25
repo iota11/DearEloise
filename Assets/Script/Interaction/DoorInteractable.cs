@@ -17,6 +17,8 @@ public class DoorInteractable : IInteractable {
     private void Awake() {
         _isOpen = false;
         animator.SetBool("Open", _isOpen);
+        GameObject cv = GameObject.Find("Canvas");
+        UIContainer = cv.transform.Find("TriggerUI").gameObject;
     }
 
     public override void Deactivate() {

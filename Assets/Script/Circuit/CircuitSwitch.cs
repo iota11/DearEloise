@@ -44,18 +44,11 @@ public class CircuitSwitch : CircuitWire
         for (int i = 0; i < _options.Count; i++) {
             CircuitEnd end = _options[i];
             if(i == SwitchNo) {
-                Debug.Log("set true " + end.name);
                 end._IsTriggerable = true;
             } else {
-                end._IsTriggerable = false;
-                
+                end._IsTriggerable = false ;
             }
         }
         Refresh();
     }
-    /*
-    private void Update() {
-       SwitchNo = test;
-    }
-    */
 }

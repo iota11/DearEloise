@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MoveInteractable : IInteractable {
 
-    [SerializeField] private GameObject UIContainer;
+    private GameObject UIContainer;
     private Button interactButton;
     private bool _isFollowing = false;
     private Animator animator;
@@ -14,10 +14,12 @@ public class MoveInteractable : IInteractable {
     private void Awake() {
         animator = GetComponent<Animator>();
         _isTriggered = false;
+        GameObject cv = GameObject.Find("Canvas");
+        UIContainer = cv.transform.Find("MoveUI").gameObject;
     }
 
     public override void Deactivate() {
-                interactButton.onClick?.RemoveAllListeners();
+        interactButton.onClick?.RemoveAllListeners();
                 UIContainer.SetActive(false);
                 _isTriggered = false;
                 playerTrans = null;
@@ -43,6 +45,8 @@ public class MoveInteractable : IInteractable {
     }
     public void SetFollow() {
         _isFollowing = !_isFollowing;
+        playerTrans.gameObject.GetComponent<PlayerInteract>().onHold = _isFollowing;
+
         if (_isFollowing) {
             Vector3 offset = (transform.position - playerTrans.position).normalized;
             StartCoroutine(FollowPlayer(offset));

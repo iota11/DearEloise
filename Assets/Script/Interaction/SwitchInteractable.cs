@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SwitchInteractable : IInteractable {
 
-    [SerializeField] private GameObject UIContainer;
+    private GameObject UIContainer;
     [SerializeField] private CircuitSwitch _switch;
     private int _switchOption = 0;
     private int _optionNum = 1;
@@ -17,6 +17,9 @@ public class SwitchInteractable : IInteractable {
         animator = GetComponent<Animator>();
         _isTriggered = false;
         _optionNum = _switch.GetOpetionsNum();
+        //assign UI
+        GameObject cv = GameObject.Find("Canvas");
+        UIContainer = cv.transform.Find("SwitchUI").gameObject;
     }
 
     public override void Deactivate() {

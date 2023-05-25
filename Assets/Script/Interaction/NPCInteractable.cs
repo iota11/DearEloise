@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class NPCInteractable : IInteractable {
 
     [SerializeField] private string interactText;
-    [SerializeField] private GameObject UIContainer;
+    private GameObject UIContainer;
 
     private Button interactButton;
     private Animator animator;
@@ -17,6 +17,8 @@ public class NPCInteractable : IInteractable {
         animator = GetComponent<Animator>();
         //UIContainer.SetActive(false);
         _isTriggered = false;
+        GameObject cv = GameObject.Find("Canvas");
+        UIContainer = cv.transform.Find("TalkUI").gameObject;
         //npcHeadLookAt = GetComponent<NPCHeadLookAt>();
     }
 

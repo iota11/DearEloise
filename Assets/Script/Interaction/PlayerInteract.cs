@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerInteract : MonoBehaviour {
     private IInteractable interactable;
-
+    public bool onHold = false;
 
     private IInteractable Interactable {
         get { return interactable; }
@@ -22,8 +22,9 @@ public class PlayerInteract : MonoBehaviour {
         }
      }
     private void Update() {
-
-         Interactable = GetInteractableObject();
+        if (!onHold) {
+            Interactable = GetInteractableObject();
+        }
         /*
             if (interactable != null) {
                 interactable.Interact(transform);

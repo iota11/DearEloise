@@ -11,7 +11,7 @@ public abstract class IInteractable: MonoBehaviour {
     protected Transform playerTrans;
     protected bool _isElectricOn = false;
 
-    public bool _isElectric = true;
+    public bool _isElectric = false;
     [HideInInspector]
     public CircuitEnd InputEnd;
     public void Interact(Transform interactorTransform) {

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class LightInteractable : IInteractable {
 
-    [SerializeField] private GameObject UIContainer;
+    private GameObject UIContainer;
     [SerializeField] private Light light;
     private bool _isOn = false;
     private Button interactButton;
@@ -17,6 +17,8 @@ public class LightInteractable : IInteractable {
         //UIContainer.SetActive(false);
         light.intensity = 0;
         _isTriggered = false;
+        GameObject cv = GameObject.Find("Canvas");
+        UIContainer = cv.transform.Find("TriggerUI").gameObject;
     }
 
     public override void Deactivate() {
@@ -51,7 +53,7 @@ public class LightInteractable : IInteractable {
         //switch is still on
     }
     public void TriggerLight() {
-        if (_isElectricOn) {
+        if ((_isElectricOn&&_isElectric) || !_isElectric) {
             _isOn = !_isOn;
             if (_isOn) {
                 light.intensity = 5;
