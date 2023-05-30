@@ -7,13 +7,13 @@ public class EnemyDetection : MonoBehaviour
 {
     
     
-    private Dictionary<Transform, float> Targets;
+    private Dictionary<Transform, KeyValuePair<float, float>> Targets;
     private float TimeToSafe;
     private Coroutine LoseCor;
 
     private void Awake()
     {
-        Targets = new Dictionary<Transform, float>();
+        Targets = new Dictionary<Transform, KeyValuePair<float, float>>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -26,8 +26,11 @@ public class EnemyDetection : MonoBehaviour
                 if (LoseCor != null) {
                     StopCoroutine(LoseCor);
                 }
-                float CurDis = (gameObject.transform.position - other.transform.position).magnitude;
-                Targets[other.transform] = CurDis;
+                //float CurDis = (gameObject.transform.position - other.transform.position).magnitude;
+                if (!Targets.ContainsKey(other.transform))
+                {
+                    Targets[other.transform] = new KeyValuePair<float, float>(0, 0);
+                }
                 transform.parent.gameObject.GetComponent<Enemy>().SetTarget(getTarget());
                 transform.parent.gameObject.GetComponent<Enemy>().ChangeState(Enemy.EnemyState.Guard);
                 
@@ -41,8 +44,11 @@ public class EnemyDetection : MonoBehaviour
             {
                 StopCoroutine(LoseCor);
             }
-            
-            Targets[other.transform] = float.NegativeInfinity;
+            if (!Targets.ContainsKey(other.transform))
+            {
+                Targets[other.transform] = new KeyValuePair<float, float>(0, 0);
+            }
+            //Targets[other.transform] = float.NegativeInfinity;
             transform.parent.gameObject.GetComponent<Enemy>().SetTarget(getTarget());
             transform.parent.gameObject.GetComponent<Enemy>().ChangeState(Enemy.EnemyState.Guard);
 
@@ -85,13 +91,20 @@ public class EnemyDetection : MonoBehaviour
         }
     }
 
-    public void Damage(Transform other) {
+    public void Damage(Transform other, float attack) {
         if (LoseCor != null)
         {
             StopCoroutine(LoseCor);
         }
-        
-        Targets[other] = 0;
+
+        //Targets[other] = 0;
+        if (Targets.ContainsKey(other.transform))
+        {
+            Targets[other.transform] = new KeyValuePair<float, float>(Targets[other.transform].Key + attack, Targets[other.transform].Value);
+        }
+        else {
+            Targets[other.transform] = new KeyValuePair<float, float>(attack, 0);
+        }
         transform.parent.gameObject.GetComponent<Enemy>().SetTarget(getTarget());
         transform.parent.gameObject.GetComponent<Enemy>().ChangeState(Enemy.EnemyState.Guard);
 
@@ -113,13 +126,32 @@ public class EnemyDetection : MonoBehaviour
     private Transform getTarget()
     {
         // Convert the dictionary to a list of key-value pairs
-        List<KeyValuePair<Transform, float>> list = Targets.ToList();
-
+        List<KeyValuePair<Transform, KeyValuePair<float, float>>> list = Targets.ToList();
+        for(int i = 0; i < list.Count; i++) {
+            Targets[list[i].Key] = new KeyValuePair<float, float>(Targets[list[i].Key].Key, CalcHate(list[i].Key, i==0));
+        }
         // Sort the list by value in ascending order
-        list.Sort((x, y) => x.Value.CompareTo(y.Value));
-
+        list.Sort((x, y) => x.Value.Value.CompareTo(y.Value.Value));
+        
         return list.First().Key;
     }
 
+    private float CalcHate(Transform Trans_in, bool CurTar) {
+        float res = 0;
+        if (Trans_in.gameObject.CompareTag("Lamp"))
+        {
+            res += 20;
+        }
+        else {
+            res += 50;
+        }
+        res += Targets[Trans_in].Key;
+        float CurDis = (new Vector2(transform.position.x - Trans_in.position.x, transform.position.z - Trans_in.position.z)).magnitude;
+        res += (100 -CurDis);
+        if (CurTar) {
+            res *= 1.2f;
+        }
+        return res;
+    }
 
 }
