@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
         while (true) {
 
             if (counter >= TriggerTime) {
-                GetComponentInChildren<EnemyDetection>().Damage(LightOther);
+                GetComponentInChildren<EnemyDetection>().Damage(LightOther, attack);
                 LoseHealth(attack);
                 counter = 0;
                 yield return new WaitForSeconds(CoolDownTime);
