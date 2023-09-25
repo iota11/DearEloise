@@ -1,35 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour {
-
-    private float mouseY;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        mouseY = Input.GetAxis("Mouse X");
-        this.transform.localEulerAngles += new Vector3(0, mouseY, 0);
-        var speed = 0.3f * Time.deltaTime * 60f;
-        if(Input.GetKey(KeyCode.W))
-        {
-            this.transform.Translate(Vector3.forward * speed);
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            this.transform.Translate(Vector3.back * speed);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            this.transform.Translate(Vector3.left * speed);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            this.transform.Translate(Vector3.right * speed);
-        }
+    public float moveSpeed = 5f;
+    public InputAction playerControls;
+    public  Camera playerCamera;
+    Vector3 moveDirection =  Vector3.zero;
+    private void Awake() {
+        //playerCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
     }
+    private void OnEnable() {
+        playerControls.Enable();
+    }
+    private void OnDisable() {
+        playerControls.Disable();    }
+    private void Update() {
+        Vector2 RawDirection = playerControls.ReadValue<Vector2>();
+        Vector3 Cam_left= Vector3.Cross(playerCamera.transform.forward, Vector3.up).normalized;
+        Vector3 Cam_forward = Vector3.Cross(Cam_left, Vector3.up).normalized;
+        moveDirection =- RawDirection.y* Cam_forward  -RawDirection.x * Cam_left;
+    }
+    private void FixedUpdate() {
+        transform.position = transform.position+moveSpeed * moveDirection * Time.deltaTime;
+    }
+
 }

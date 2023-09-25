@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public abstract class IInteractable: MonoBehaviour {
     protected bool _isTriggered = false;
@@ -12,7 +13,7 @@ public abstract class IInteractable: MonoBehaviour {
     protected bool _isElectricOn = false;
 
     public bool _isElectric = false;
-    [HideInInspector]
+   // [HideInInspector]
     public CircuitEnd InputEnd;
     public void Interact(Transform interactorTransform) {
         if (!_isTriggered) {
@@ -42,7 +43,10 @@ public abstract class IInteractable: MonoBehaviour {
     }
 
     public void OnDrawGizmos() {
-        
+        if (_isElectric) {
+            Gizmos.color = _isElectricOn ? Color.yellow : Color.black;
+            Gizmos.DrawLine(transform.position, InputEnd.transform.position); 
+        }
     }
 
 }

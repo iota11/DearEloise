@@ -12,6 +12,14 @@ public class CircuitWire : MonoBehaviour
     public List<CircuitEnd> inputEndsList = new List<CircuitEnd>();
     public event Action OnWireTriggered;
     public event Action OnWireQuenched;
+    /*
+    public void Update() {
+        foreach (CircuitEnd end in endsList) {
+            Vector3 pos = end.gameObject.transform.position;
+            Debug.DrawLine(transform.position, pos, Color.red, Time.deltaTime*2);
+
+        }
+    }*/
 
     virtual public void SetUp() {
         foreach (CircuitEnd end in endsList) {
@@ -23,6 +31,7 @@ public class CircuitWire : MonoBehaviour
             }
         }
         Debug.Log("set");
+        
     }
     private void OnEnable() {
         SetUp();
@@ -30,7 +39,6 @@ public class CircuitWire : MonoBehaviour
 
     public void Refresh() {
         if (_isOn) {
-            Debug.Log("adfaafafafaf");
             OnWireTriggered?.Invoke();
             _isOn = true;
         }
